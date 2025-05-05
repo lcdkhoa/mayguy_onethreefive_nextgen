@@ -24,59 +24,60 @@ interface TypographyConfig {
 	caption: TypographyVariant;
 }
 
-const FONT_FAMILY = "'Playfair Display', serif";
+const PLAYFAIR_FONT_FAMILY = "'Playfair Display', serif";
+const MONT_FONT_FAMILY = "'Montserrat', serif";
 
 const typographyConfig: TypographyConfig = {
-	fontFamily: FONT_FAMILY,
+	fontFamily: PLAYFAIR_FONT_FAMILY,
 	h1: {
-		fontFamily: FONT_FAMILY,
+		fontFamily: PLAYFAIR_FONT_FAMILY,
 		fontSize: '2.5rem',
 		fontWeight: 700,
 	},
 	h2: {
-		fontFamily: FONT_FAMILY,
+		fontFamily: PLAYFAIR_FONT_FAMILY,
 		fontSize: '2rem',
 		fontWeight: 700,
 	},
 	h3: {
-		fontFamily: FONT_FAMILY,
+		fontFamily: PLAYFAIR_FONT_FAMILY,
 		fontSize: '1.75rem',
 		fontWeight: 700,
 	},
 	h4: {
-		fontFamily: FONT_FAMILY,
+		fontFamily: PLAYFAIR_FONT_FAMILY,
 		fontSize: '1.5rem',
 		fontWeight: 700,
 	},
 	h5: {
-		fontFamily: FONT_FAMILY,
+		fontFamily: PLAYFAIR_FONT_FAMILY,
 		fontSize: '1.25rem',
 		fontWeight: 700,
 	},
 	h6: {
-		fontFamily: FONT_FAMILY,
+		fontFamily: PLAYFAIR_FONT_FAMILY,
 		fontSize: '1rem',
 		fontWeight: 700,
 	},
 	body1: {
-		fontFamily: FONT_FAMILY,
+		fontFamily: MONT_FONT_FAMILY,
 		fontSize: '1rem',
 		lineHeight: 1.5,
 		fontWeight: 400,
 	},
 	body2: {
-		fontFamily: FONT_FAMILY,
+		fontFamily: MONT_FONT_FAMILY,
 		fontSize: '0.875rem',
 		lineHeight: 1.5,
 		fontWeight: 400,
 	},
 	caption: {
-		fontFamily: FONT_FAMILY,
+		fontFamily: MONT_FONT_FAMILY,
 		fontSize: '0.75rem',
 		fontWeight: 400,
 	},
 	subtitle1: {
-		fontFamily: FONT_FAMILY,
+		fontFamily: MONT_FONT_FAMILY,
 		fontSize: '0.875rem',
 		lineHeight: 1.5,
 		fontWeight: 400,
@@ -94,14 +95,14 @@ const createCustomTheme = (mode: 'light' | 'dark'): ThemeOptions => ({
 			styleOverrides: {
 				root: {
 					textTransform: 'none',
-					fontFamily: FONT_FAMILY,
+					fontFamily: MONT_FONT_FAMILY,
 				},
 			},
 		},
 		MuiTypography: {
 			styleOverrides: {
 				root: {
-					fontFamily: FONT_FAMILY,
+					fontFamily: MONT_FONT_FAMILY,
 				},
 			},
 		},
