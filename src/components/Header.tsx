@@ -1,5 +1,3 @@
-'use client';
-
 import { sections } from '@/configs/constants';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Bedtime, BrightnessHigh } from '@mui/icons-material';

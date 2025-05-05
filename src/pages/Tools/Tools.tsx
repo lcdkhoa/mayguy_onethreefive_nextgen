@@ -29,7 +29,7 @@ export default function Tools() {
 		});
 	}, [tools]);
 
-	const handleOpen = (index) => {
+	const handleOpen = (index: number) => {
 		setTools(
 			tools.map((tool, i) =>
 				i === index
@@ -39,7 +39,7 @@ export default function Tools() {
 		);
 	};
 
-	const handleClose = (index) => {
+	const handleClose = (index: number) => {
 		setTools(
 			tools.map((tool, i) =>
 				i === index

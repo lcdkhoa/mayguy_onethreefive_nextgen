@@ -40,11 +40,15 @@ const FlattenObjects = ((isArray, wrapped) => {
 	return (table: any) => reduce('', {}, table);
 })(Array.isArray, Object);
 
+interface NestedObject {
+	[key: string]: any;
+}
+
 const UnflattenObjects = (json: any, splitKey: string = '_') => {
-	const result = {};
+	const result: NestedObject = {};
 	Object.entries(json).forEach(([key, value]) => {
 		const parts = key.split(splitKey);
-		let current = result;
+		let current: NestedObject = result;
 		parts.forEach((part, i) => {
 			const arrayPattern = /^(\D+)(\d+)$/;
 			const isArray = arrayPattern.exec(part);

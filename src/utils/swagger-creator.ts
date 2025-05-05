@@ -1,6 +1,12 @@
 import yaml from 'js-yaml';
 import * as _ from 'lodash';
 
+interface JsonSchema {
+	required: string[];
+	type: string;
+	properties: Record<string, any>;
+}
+
 const OthersConverter = (key: string, value: any) => {
 	const data = {
 		type: typeof value,
@@ -13,8 +19,8 @@ const OthersConverter = (key: string, value: any) => {
 	return data;
 };
 
-function convertJson(jsonData: any) {
-	let result = {
+function convertJson(jsonData: object): JsonSchema {
+	let result: JsonSchema = {
 		required: Object.keys(jsonData),
 		type: 'object',
 		properties: {},

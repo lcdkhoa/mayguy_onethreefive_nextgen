@@ -14,16 +14,28 @@ import {
 } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
-import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 
 import { ToolSwaggers } from '../../configs/constants';
 
-SwaggerCreator.propTypes = {
-	open: PropTypes.bool.isRequired,
-	close: PropTypes.func.isRequired,
-	index: PropTypes.number.isRequired,
-};
+interface SwaggerCreatorProps {
+	open: boolean;
+	close: (index: number) => void;
+	index: number;
+}
+
+interface SwaggerFormValues {
+	api_input_schema: string;
+	api_output_schema: string;
+	api_url: string;
+	api_title: string;
+	api_description: string;
+	api_version: string;
+	api_method: string;
+	api_path: string;
+	api_bad_error_schema: string;
+	api_network_error_schema: string;
+}
 
 const RoundBorderTextField = styled(TextField)(() => ({
 	'& .MuiOutlinedInput-root': {
@@ -40,12 +52,12 @@ const CustomAccordionSummary = styled(AccordionSummary)(() => ({
 	},
 }));
 
-export default function SwaggerCreator({ ...props }) {
+export default function SwaggerCreator({ ...props }: SwaggerCreatorProps) {
 	const { open, close, index } = props;
-	const { getValues, setValue, watch } = useForm({
+	const { getValues, setValue } = useForm<SwaggerFormValues>({
 		defaultValues: {},
 	});
-	const watchAllFields = watch();
+	// const watchAllFields = watch();
 
 	const handleClose = () => {
 		close(index);
@@ -102,9 +114,9 @@ export default function SwaggerCreator({ ...props }) {
 							<CustomAccordionSummary
 								expandIcon={<ArrowDropDownIcon />}
 								aria-controls="panel1-content"
-								id={tool.id}
+								id={String(tool.id)}
 							>
-								<Grid item container direction={'row'} alignItems={'center'}>
+								<Grid container direction={'row'} alignItems={'center'}>
 									<tool.icon fontSize="large" />
 									<Typography
 										sx={{
@@ -116,14 +128,13 @@ export default function SwaggerCreator({ ...props }) {
 								</Grid>
 							</CustomAccordionSummary>
 							<Grid
-								item
 								container
 								sx={{
 									padding: 2,
 								}}
 							>
 								<Typography
-									variant={'body'}
+									variant={'body1'}
 									sx={{
 										marginBottom: 2,
 										marginLeft: 2,
@@ -134,11 +145,11 @@ export default function SwaggerCreator({ ...props }) {
 								{tool.jsonRender ? (
 									<MonacoEditorWrapper
 										height="40vh"
-										id={tool.id + '_json'}
-										name={tool.name}
-										value={getValues(tool.name)}
+										value={getValues(tool.name as keyof SwaggerFormValues)}
 										onChange={(value) => {
-											setValue(tool.name, value);
+											if (value !== undefined) {
+												setValue(tool.name as keyof SwaggerFormValues, value);
+											}
 										}}
 									/>
 								) : (
@@ -146,10 +157,17 @@ export default function SwaggerCreator({ ...props }) {
 										id={tool.id + '_text'}
 										name={tool.name}
 										select={tool.hasDropdown}
-										value={getValues(tool.name) || ''}
+										value={
+											getValues(tool.name as keyof SwaggerFormValues) || ''
+										}
 										placeholder={tool.textHolder}
 										fullWidth
-										onChange={(e) => setValue(tool.name, e.target.value)}
+										onChange={(e) =>
+											setValue(
+												tool.name as keyof SwaggerFormValues,
+												e.target.value
+											)
+										}
 									>
 										{tool.hasDropdown &&
 											tool.dropdownValue.map((option) => (
@@ -165,13 +183,11 @@ export default function SwaggerCreator({ ...props }) {
 				</DialogContent>
 				<Divider />
 				<Grid
-					item
 					container
 					direction={'row'}
 					justifyContent={'center'}
 					paddingBottom={2}
 					paddingTop={2}
-					xs={12}
 				>
 					<HandlerButton type="submit" onClick={handleSubmit}>
 						Create Swagger

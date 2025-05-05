@@ -2,16 +2,15 @@ import HandlerButton from '@/components/HandlerButton';
 import MonacoEditorWrapper from '@/components/MonacoEditor';
 import { FlattenObjects, UnflattenObjects } from '@/utils/object-handler';
 import { Dialog, DialogContent, Divider, Grid } from '@mui/material';
-import PropTypes from 'prop-types';
 import { useState } from 'react';
 
-ObjectHandler.propTypes = {
-	open: PropTypes.bool.isRequired,
-	close: PropTypes.func.isRequired,
-	index: PropTypes.number.isRequired,
-};
+interface ObjectHandlerProps {
+	open: boolean;
+	close: (index: number) => void;
+	index: number;
+}
 
-export default function ObjectHandler({ ...props }) {
+export default function ObjectHandler({ ...props }: ObjectHandlerProps) {
 	const { open, close, index } = props;
 	const [text, setText] = useState('');
 	const [inputText, setInputText] = useState('Add input_');

@@ -1,6 +1,15 @@
 import TuneIcon from '@mui/icons-material/Tune';
 import { IconButton, Menu, MenuItem } from '@mui/material';
-import PropTypes from 'prop-types';
+
+interface OptionPopoverProps {
+	id: string;
+	openOption: boolean;
+	toolbarOptionsAnchorEl: any;
+	handleClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+	handleCloseOption: () => void;
+	handleChange: (value: string) => void;
+	splitter: string;
+}
 
 const OptionPopover = ({
 	id,
@@ -9,15 +18,20 @@ const OptionPopover = ({
 	handleClick,
 	handleCloseOption,
 	handleChange,
-}) => {
-	const handleChooseSplitter = (value) => {
+}: OptionPopoverProps) => {
+	const handleChooseSplitter = (value: string) => {
 		handleChange(value);
 		handleCloseOption();
 	};
 	return (
 		<div title="Options">
-			<IconButton edge="start" color="inherit" aria-label="menu">
-				<TuneIcon onClick={handleClick} />
+			<IconButton
+				edge="start"
+				color="inherit"
+				aria-label="menu"
+				onClick={handleClick}
+			>
+				<TuneIcon />
 			</IconButton>
 			<Menu
 				id={id}
@@ -42,15 +56,6 @@ const OptionPopover = ({
 			</Menu>
 		</div>
 	);
-};
-OptionPopover.propTypes = {
-	id: PropTypes.string.isRequired,
-	openOption: PropTypes.bool.isRequired,
-	toolbarOptionsAnchorEl: PropTypes.any,
-	handleClick: PropTypes.func.isRequired,
-	handleCloseOption: PropTypes.func.isRequired,
-	handleChange: PropTypes.func.isRequired,
-	splitter: PropTypes.string.isRequired,
 };
 
 export default OptionPopover;

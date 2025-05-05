@@ -1,5 +1,3 @@
-'use client';
-
 import { useTheme } from '@/contexts/ThemeContext';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';

@@ -1,61 +1,31 @@
 import HandlerButton from '@/components/HandlerButton';
 import MonacoEditorWrapper from '@/components/MonacoEditor';
-import { FlattenObjects, UnFlatObjects } from '@lcdkhoa/object-handler';
-// import {
-// 	FlattenObjects,
-// 	UnFlatObjects,
-// } from '@/utils/object-handler-playground';
-import FormatAlignRightIcon from '@mui/icons-material/FormatAlignRight';
+// import { FlattenObjects, UnFlatObjects } from '@lcdkhoa/object-handler';
 import {
-	Dialog,
-	DialogContent,
-	Divider,
-	Grid,
-	IconButton,
-	Toolbar,
-} from '@mui/material';
-import PropTypes from 'prop-types';
+	FlattenObjects,
+	UnFlatObjects,
+} from '@/utils/object-handler-playground';
+import { Dialog, DialogContent, Divider, Grid } from '@mui/material';
 import { useState } from 'react';
 
 import OptionPopover from './components/OptionsPopover';
 
-const EditorToolbar = ({ editorRef }) => {
-	const formatDocument = () => {
-		if (!editorRef.current) return;
-		if (!editorRef.current.getValue()) return;
-		try {
-			const formattedText = JSON.stringify(
-				JSON.parse(editorRef.current.getValue()),
-				null,
-				2
-			);
-			editorRef.current.setValue(formattedText);
-		} catch (error) {
-			alert(error);
-		}
-	};
+interface ObjectHandlerProps {
+	open: boolean;
+	close: (index: number) => void;
+	index: number;
+}
 
-	return (
-		<Toolbar>
-			<IconButton>
-				<FormatAlignRightIcon onClick={formatDocument} />
-			</IconButton>
-		</Toolbar>
-	);
-};
-
-EditorToolbar.propTypes = {
-	editorRef: PropTypes.object.isRequired,
-};
-
-export default function ObjectHandler({ ...props }) {
+export default function ObjectHandler({ ...props }: ObjectHandlerProps) {
 	const { open, close, index } = props;
 	const [text, setText] = useState('');
-	// const editorRef = useRef(null);
 
-	const [toolbarOptionsAnchorEl, setToolbarOptionsAnchorEl] = useState(null);
+	const [toolbarOptionsAnchorEl, setToolbarOptionsAnchorEl] =
+		useState<HTMLButtonElement | null>(null);
+
 	const [splitter, setSelectedSplitter] = useState('_');
-	const handleClick = (event) => {
+
+	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setToolbarOptionsAnchorEl(event.currentTarget);
 	};
 
@@ -63,12 +33,12 @@ export default function ObjectHandler({ ...props }) {
 		setToolbarOptionsAnchorEl(null);
 	};
 
-	const handleChange = (value) => {
+	const handleChange = (value: string) => {
 		setSelectedSplitter(value);
 	};
 
 	const openOption = Boolean(toolbarOptionsAnchorEl);
-	const id = openOption ? 'simple-popover' : undefined;
+	const id = openOption ? 'simple-popover' : 'none';
 
 	const handleClose = () => {
 		close(index);
@@ -95,8 +65,8 @@ export default function ObjectHandler({ ...props }) {
 		}
 	};
 
-	const handleOnchange = (e) => {
-		setText(e);
+	const handleOnchange = (value: string | undefined) => {
+		setText(value || '');
 	};
 
 	return (
@@ -114,13 +84,11 @@ export default function ObjectHandler({ ...props }) {
 				</DialogContent>
 				<Divider />
 				<Grid
-					item
 					container
 					direction={'row'}
 					justifyContent={'center'}
 					paddingBottom={2}
 					paddingTop={2}
-					xs={12}
 				>
 					<OptionPopover
 						id={id}
@@ -144,9 +112,3 @@ export default function ObjectHandler({ ...props }) {
 		</form>
 	);
 }
-
-ObjectHandler.propTypes = {
-	open: PropTypes.bool.isRequired,
-	close: PropTypes.func.isRequired,
-	index: PropTypes.number.isRequired,
-};
