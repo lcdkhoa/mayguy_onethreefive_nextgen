@@ -24,7 +24,7 @@ interface TypographyConfig {
 	caption: TypographyVariant;
 }
 
-const FONT_FAMILY = '"Playfair Display", serif';
+const FONT_FAMILY = "'Playfair Display', serif";
 
 const typographyConfig: TypographyConfig = {
 	fontFamily: FONT_FAMILY,
